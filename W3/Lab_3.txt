@@ -1,0 +1,54 @@
+Task 1
+
+The algorithm that takes 4N + 16 steps has a time complexity of O(N). This is because the term 4N grows linearly with the input size N, and the constant 16 does not affect the growth rate as N increases. Therefore, the time complexity is simplified to O(N). For example, if N = 10, it takes 56 steps.
+
+Task 2
+
+The algorithm that takes 2N² steps has a time complexity of O(N²) in Big O notation. We ignore the constant 2 because it doesn’t affect how the algorithm grows with input size N. This means the algorithm’s runtime grows quadratically as the size of N increases.
+
+Task 3
+
+def double_then_sum(array) 
+	doubled_array = []
+
+	array.each do |number| 
+		doubled_array << number *= 2
+	end
+
+	sum = 0
+
+	doubled_array.each do |number| 
+		sum += number
+	end
+	return sum 
+end
+
+The function performs two main operations. First, it iterates over each element of the input array, doubling each number and adding it to a new array (doubled_array). This operation takes O(N) time, where N is the number of elements in the input array. Second, the function sums all the elements of doubled_array, which also requires iterating over N elements. This summing operation also takes O(N) time. Since both operations are O(N), the total time complexity is O(N) + O(N), which simplifies to O(N). Therefore, the overall time complexity of the double_then_sum function is O(N), where N is the length of the input array.
+
+Task 4
+
+def multiple_cases(array) 
+	array.each do |string|
+		puts string.upcase 
+		puts string.downcase 
+		puts string.capitalize
+	end 
+end
+
+The multiple_cases function loops through each string in the array, and for each string, it performs three operations: converting to uppercase, converting to lowercase, and capitalizing the first letter. Each of these operations takes O(L) time, where L is the length of the string. Since the function processes N strings, the total time complexity is O(N * L), where N is the number of strings and L is the average length of each string.
+
+Task 5
+
+def every_other(array) 
+	array.each_with_index do |number, index|
+		if index.even?
+			array.each do |other_number|
+            	puts number + other_number
+			end 
+		end
+	end 
+end 
+
+This function uses the each_with_index method to iterate through each element of the array. The outer loop runs n times, where n is the number of elements in the array. However, the inner loop only runs for elements with even indices. For each even index, the inner loop iterates over all elements of the array, performing n iterations. Since the inner loop is executed only for half of the iterations of the outer loop (the even indices), the inner loop runs approximately n / 2 times. Each time the inner loop runs, it processes n elements. Therefore, the total number of operations is (n / 2) * n, which simplifies to O(n²).
+
+Thus, the time complexity of this function is O(n²).
