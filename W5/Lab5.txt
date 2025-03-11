@@ -1,0 +1,104 @@
+1.
+This C++ code demonstrates how to efficiently search for elements in an array by using an unordered map(hash table).
+The createHashTable function takes a vector of integers and creates a hashtable where each element of the array is
+mapped to its index. This allows for constant time lookups on average. The search function searches the hash table 
+for a target value. In the main function an array of integers is given, and the hash table is created. The program
+then performs search operations for different target values and prints the results. This approach reduces the search
+time complexity to O(1) on average. providing a significant improvement over linear search in terms of efficiency.
+
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+
+std::unordered_map<int, int> createHashTable(const std::vector<int>& arr)
+{
+	std::unordered_map<int, int> hashTable;
+
+	for (int i = 0; i < arr.size(); i++)
+	{
+		hashTable[arr[i]] = i;
+	}
+
+	return hashTable;
+}
+
+int search(const std::unordered_map<int, int>& hashTable, int target)
+{
+	auto it = hashTable.find(target);
+	if (it != hashTable.end())
+	{
+		return it->second;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+int main()
+{
+	std::vector<int> array = { 200, 400, 100, 50, 350 };
+	std::unordered_map<int, int> lookupTable = createHashTable(array);
+
+	std::cout << search(lookupTable, 200) << '\n';
+	std::cout << search(lookupTable, 400) << '\n';
+	std::cout << search(lookupTable, 500) << '\n';
+
+	return 0;
+}
+
+
+2.
+This c++ code demonstrate how to generate a hash value for a string using the C++ Standard Library.
+It also include headers <functional> to access the std::hash function object. 
+Inside the main function, a string variable name is defined with the value "Jong". 
+The std::hash<std::string>hasher; creates a hash funtion object specifically for string, and size_t
+hashValue = hasher(name); computes the hash value for name string. 
+
+
+#include <iostream>
+#include <string>
+#include <functional>
+
+int main()
+{
+	std::string name = "Jong";
+	std::hash<std::string> hasher;
+	size_t hashValue = hasher(name);
+
+	std::cout << "Hash value of '" << name << " ': " << hashValue << '\n';
+
+	return 0;
+}
+
+3.
+Using tombstones to mark deleted cells in a hash table can cause several issues. Since tombstones don't actually empty the cell but just mark it as deleted, search operations become inefficient as the algorithm must skip over tombstones. 
+
+Let's consider a hash table with a size of 6 and use linear pobing for collision resoultion. Initially, we insert elements A, B, and C into the table, and then delete B, marking it with a tombstone(T).
+
+
+Step 1. Inserting "A", "B", and "C"
+
+Index	0	1	2	3	4	5
+
+Value	A	B	C
+
+Step 2. Deleting "B" (Mark with Tombstone)
+
+Index 	0	1	2	3	4	5
+
+Value	A	T	C
+
+Step 3. Inserting "D"
+
+Index 	0	1	2	3	4	5
+
+Value	A	T	C	D
+
+When searching for "B", the algorithm will encounter a tombstone at index 1. It must then continue searching to verify "B" has indeed been deleted, which adds unnecessary steps. During insertion, tombstones may be mistaken for available spaces, leading to nunecessary probing and slower insertion times. As more tombstones acuumlate over time, the hash tables's efficency decreases. Eventually, rehashing may be requried to remove tombstones and reorganize the table.	
+
+
+
+
+
+
