@@ -1,0 +1,114 @@
+                               // This code implements the basic operations of a linked list, including insertion at the beginning, 
+                                  deletion from the beginning, and displaying the list. The linked list is dynamically allocated 
+                                  in memory, and it handles memory deallocation through the destructor to avoid memory leaks. 
+                                  This provides a good foundation for understanding the structure and manipulation of data in a linked list. 
+                                  The code demonstrates the dynamic nature of linked lists, where elements can be inserted and deleted 
+                                  efficiently without the need for contiguous memory, as required by arrays.
+
+#include <iostream>
+
+
+struct Node                    // The Node strucuture is defined first. This structure represents a node in the linked list and 
+{                                 contains two important members: 
+	int data;                 data: This holds the actual data value of the nodes.
+	Node* next;               next: This is a pointer to the next node in the list. It allows the linked list to "link" the nodes
+};                                      together.
+
+
+class LinkedList               // The LinkedList class is responsible for handling all the operations related to the linked list.
+{                                 It uses the Node structure to manage the linked list.
+private:
+	Node* head; 
+
+public:
+
+
+	LinkedList()           // The consructor LinkedList() is called when an object of the LinkedList class is instantiated. 
+	{                         It initailized the head pointer to nullptr, indicating that the linked list is initially empty.
+		head = nullptr;
+	}
+
+	
+	~LinkedList()                   // The destructor is called when the linked list object is destroyed. It frees the memory of all
+	{                                  all the nodes in the list to avoid memery leaks. The destructor iterates over all the nodes and 
+		Node* current = head;      deletes them one by one.
+		while (current != nullptr)
+		{
+			Node* next = current->next;
+			delete current;
+			current = next;
+		}
+		head = nullptr;
+	}
+	
+	void insertAtbeginning(int value) // The insertAtbeginning method inserts a new node with the given value at the beginning of the list.
+	{
+		Node* newNode = new Node; // Dynamically creat a new node(new Node).
+		newNode->data = value;    // Store the received value in the node's data.
+		newNode->next = head;     // Set the new node's next to point to the current head.
+
+		head = newNode;           // Update head to point to the new node, changing the starting point of the list.
+
+		std::cout << "Inserted " << value << " at the beginning\n";
+	}
+
+	void deleteFromBeginning()        // The deleteFromBeginning method deletes the first node in the list. The steps are 
+	{
+		if (head == nullptr)      // Check if the list is empty.
+		{
+			std::cout << "List is emtpy. Nothing to delete.\n";
+			
+			return;
+		}
+
+		Node* temp = head;        // Store the current head in a temporary pointer temp.
+		head = head->next;        // Update head to point to the new node.
+		std::cout << "Deleted " << temp->data << " from the beginning\n";
+		delete temp;              // Delete the old head node
+	}
+
+	void display()                    // The display() method prints the entire liked list. It starts from the head node and iterates
+	{                                    through each node, printing its data. When it reaches the end of the list, it prints 
+		if (head == nullptr)         "NULL" to mark the end of the list.
+		{
+			std::cout << "List is empty\n";
+			return;
+		}
+
+		Node* current = head;
+		std::cout << "List: ";
+		while (current != nullptr)
+		{
+			std::cout << current->data << " -> ";
+			current = current->next;
+		}
+		std::cout << "NULL\n";
+	}
+};
+
+int main()                                // The main() function is where the linked list is created and various operations are performed.
+{
+	LinkedList list;
+
+	list.display();                   // initially, the linked list is empty, so it prints an empty list.
+ 
+	list.insertAtbeginning(10);       // The method is called three times to insert 10,20 and 30 at the beginning of the list.
+	list.insertAtbeginning(20);       
+	list.insertAtbeginning(30);
+
+	list.display();                   // After inserting the nodes, it displays the current state of the list.
+	
+	list.deleteFromBeginning();       // The deleteFromBeginning method is called three times to delete the nodes from the beginning.
+
+	list.display();
+
+	list.deleteFromBeginning();       
+	list.deleteFromBeginning();
+
+	list.deleteFromBeginning();       // After deleting all nodes, it tries to delete from the empty list and prints a message indicating
+                                             that the list is empty.
+	list.insertAtbeginning(40);       // Finally, it inserts the value 40 at the beginning of the list and displays the list again.
+	list.display();
+
+	return 0;
+}
