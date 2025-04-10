@@ -1,0 +1,137 @@
+1.	1
+	 \
+ 	  5
+ 	/   \
+       2     9
+      / \   / \
+     3   4 6   10
+            \
+             8
+
+2. In a well-balance binary search tree with 1000 values, the maximum number of steps required 
+   to search for a value would be determined by tree's height.
+   For a well-balanced binary search tree, the height is approximately log2(n), where n is the
+   number of nodes.
+   log2(1000) ≈ 9.97
+   Since we need a whole number of steps and we're looking for the maximum number of steps, we round up to 10.
+   Therefore, in a well-balanced binary search tree with 1,000 values, it would take 
+   at most 10 comparison steps to find any value in the tree or determine that it doesn't exist in the tree.
+
+3.
+ 
+
+class Node:                                            
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def find_greatest_value(root):
+    
+    """
+    Find the maximum value in a binary search tree.
+    
+    Args:
+        root (Node): The root node of the binary search tree.
+        
+    Returns:
+        int or None: The maximum value in the tree, or None if the tree is empty.
+    """
+    if root is None:
+        return None
+
+    current = root
+    while current.right is not None:
+        current = current.right
+    
+    return current.value
+
+The algorithm for finding the maximum value in a binary search tree leverages a key property of BSTs: in any binary search tree, the largest value is always located at the rightmost node. This is because BSTs maintain the property that for any node, all values in its left subtree are smaller than the node's value, and all values in its right subtree are greater. The algorithm simply starts at the root node and keeps traversing to the right child until it reaches a node with no right child (the rightmost node). Once this node is found, its value is returned as the maximum value in the tree. This approach is efficient with a time complexity of O(h), where h is the height of the tree, meaning it will be O(log n) for balanced trees and O(n) in the worst case of a completely unbalanced tree.
+
+
+4. 
+
+#include <iostream>
+
+struct Node 
+{
+    int data;
+    Node* left;
+    Node* right;
+    
+    Node(int value) : data(value), left(nullptr), right(nullptr) {}
+};
+
+class BinarySearchTree
+{
+private:
+    Node* root;
+    
+    Node* insertRecursive(Node* current, int value) 
+    {
+        if (current == nullptr) 
+	{
+            return new Node(value);
+        }
+        
+        if (value < current->data) 
+	{
+            current->left = insertRecursive(current->left, value);
+        } else if (value > current->data) 
+	{
+            current->right = insertRecursive(current->right, value);
+        }
+       
+        return current;
+    }
+    
+        void inorderTraversal(Node* node) 
+        {
+        if (node == nullptr) return;
+        
+        inorderTraversal(node->left);
+        std::cout << node->data << " ";
+        inorderTraversal(node->right);
+        }
+    
+public:
+    BinarySearchTree() : root(nullptr) {}
+   
+    void insert(int value) 
+    {
+        root = insertRecursive(root, value);
+    }
+    
+    void displayInorder() 
+    {
+        std::cout << "Inorder traversal: ";
+        inorderTraversal(root);
+        std::cout << std::endl;
+    }
+};
+
+int main() 
+{
+    BinarySearchTree bst;
+    
+    int arr[] = {1, 5, 9, 2, 4, 10, 6, 3, 8};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    
+    std::cout << "Inserting elements: ";
+    for (int i = 0; i < n; i++) 
+    {
+        std::cout << arr[i] << " ";
+        bst.insert(arr[i]);
+    }
+    std::cout << std::endl;
+    
+    bst.displayInorder();
+    
+    return 0;
+}
+
+This C++ code creates a binary search tree by defining a Node structure that holds an integer value and pointers to left and right child nodes, then builds a BinarySearchTree class around it. The insertion operation follows the fundamental BST property: if a new value is less than the current node's value, it's placed in the left subtree; if greater, it's placed in the right subtree. The implementation uses recursion to traverse the tree and place each new node in its correct position. When the program executes, it takes the array [1, 5, 9, 2, 4, 10, 6, 3, 8] and inserts each element sequentially into the initially empty tree, building up the BST structure one node at a time. An inorder traversal function is included to verify the tree was constructed properly, as this traversal will print the elements in ascending order regardless of their original insertion sequence.
+
+
+
+
