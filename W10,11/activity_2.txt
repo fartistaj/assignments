@@ -1,0 +1,36 @@
+Dijkstra’s algorithm is designed to find the shortest path from a starting node to all other nodes in a graph. It works by always choosing the next closest unvisited node based on the shortest known distance. However, the algorithm assumes that once a node has been visited, its shortest distance has been finalized. This assumption is only valid when all edge weights are non-negative. When negative weights are introduced, Dijkstra’s algorithm can fail to find the correct shortest path.
+
+The core reason for this failure lies in the algorithm’s greedy strategy. Dijkstra assumes that adding more edges to a path will never reduce its total distance. In a graph with only positive weights, this is true. But when negative weights exist, adding an edge with a negative value can actually create a shorter path, even to a node that has already been "visited" and finalized. Since Dijkstra does not recheck or update visited nodes, it may miss these better paths.
+
+Let’s look at a simple example to illustrate this problem:
+
+Consider a graph with three vertices: A, B, and C.
+The edges and their weights are as follows:
+
+A → B with a weight of 5
+
+A → C with a weight of 3
+
+B → C with a weight of -6
+
+Suppose we start at node A. Dijkstra’s algorithm will:
+
+1. Set the distance to A as 0.
+
+2. Update distances:
+
+	Distance to B becomes 5.
+
+	Distance to C becomes 3.
+
+3. Since C has the smaller distance (3), Dijkstra visits C first and marks it as finalized.
+
+4. Next, Dijkstra visits B.
+
+5. From B, it can reach C with an additional cost of -6, meaning the total path from A → B → C would cost 5 + (-6) = -1.
+
+However, because C was already visited and finalized with a distance of 3, Dijkstra does not reconsider C even though a shorter path (cost -1) exists through B. As a result, it incorrectly concludes that the shortest distance to C is 3, when it should actually be -1.
+
+In addition, if a graph contains a negative weight cycle — a cycle where the total sum of edge weights is negative — Dijkstra’s algorithm fails completely. In such cases, you can keep looping around the cycle indefinitely to make the total path cost smaller and smaller. This means there is no finite "shortest path," and the algorithm has no way to handle this situation.
+
+In conclusion, Dijkstra’s algorithm fails on graphs with negative edge weights because it prematurely finalizes paths without allowing for improvements that could come through negative edges.
