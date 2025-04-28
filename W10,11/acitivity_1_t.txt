@@ -1,0 +1,116 @@
+1. Create a theoretical graph using a pen and paper OR electronically. 
+
+Vertices : A, B, C, D, E
+
+Edges    : A - B                                
+           A - C
+           B - D
+           C - E
+
+             A
+            / \
+           B   C
+          /     \
+         D       E
+
+
+2. Implement the graph created in step 1 and apply breadth and depth-first search algorithms using C++.
+
+#include <iostream>
+#include <queue>
+#include <stack>
+#include <unordered_map>
+#include <vector>
+using namespace std;
+
+unordered_map<char, vector<char>> graph =           // Node 'A' is connected to 'B' and 'C'
+{                                                   // Node 'B' is connected to 'D'
+    {'A', {'B', 'C'}},                              // Node 'C' is connected to 'E'
+    {'B', {'D'}},                                   // Nodes 'D' and 'E' have no neighbors
+    {'C', {'E'}},
+    {'D', {}},
+    {'E', {}}
+};
+
+void BFS(char start)                                // create a queue to keep track of nodes to visit next
+{                                                   // create a visited map to track which nodes have been visited
+    queue<char> q;                                  
+    unordered_map<char, bool> visited;
+
+    q.push(start);                                  // push the starting node into the queue
+    visited[start] = true;                          // mark the starting node as visited
+
+    cout << "BFS Traversal: ";
+
+    while (!q.empty()) 
+    {
+        char current = q.front();                   // While the queue is not empty
+        q.pop();                                       Get the node at the front of the queue
+        cout << current << " ";                        Remove it from the queue
+                                                       
+        for (char neighbor : graph[current])        // For each neighbor of the current node
+        {                                                 if the neighbor has not been visited yet
+            if (!visited[neighbor])                       add it to the queue and mark it as visited.
+            {                                          After the BFS traversal is done, print a new line.	   
+                q.push(neighbor);
+                visited[neighbor] = true;
+            }
+        }
+    }
+    cout << endl;
+}
+
+void DFS(char start)                                // create a stack to keep track of nodes to visit
+{                                                   // create a visited map just like in BFS
+    stack<char> s;
+    unordered_map<char, bool> visited;
+
+    s.push(start);                                  // push the starting node onto the stack
+
+    cout << "DFS Traversal: ";
+
+    while (!s.empty())                              // while the stack is not empty
+    {                                                     take the top node from the stack
+        char current = s.top();                           remove it from the stack
+        s.pop();
+
+        if (!visited[current]) 
+        {
+            cout << current << " ";
+            visited[current] = true;
+
+            for (auto it = graph[current].rbegin(); it != graph[current].rend(); ++it) 
+            {
+                if (!visited[*it]) 
+                {
+                    s.push(*it);                    // push all neighbors in reverse order onto the stack
+                }                                   // after DFS traversal is complete, print a newline. 
+            }
+        }
+    }
+    cout << endl;
+}
+
+int main()                                         // Start BFS from node 'A'
+{                                                  // then start DFS from node 'A'
+    BFS('A');
+    DFS('A');
+    return 0;
+}  
+
+The graph was implemented using an adjacency list (unordered_map<char, vector<char>>).
+Two traversal algorithms, Breadth-First Search (BFS) and Depth-First Search (DFS), were applied using a queue and a stack respectively.
+
+Output:
+
+BFS Traversal: A B C D E
+DFS Traversal: A B D C E
+The BFS visits nodes level-by-level, while the DFS explores as deep as possible along each branch before backtracking.
+
+3. Compare both search algorithms in the context of Big O notations. 
+
+Both Breadth-First Search (BFS) and Depth-First Search (DFS) have a time complexity of O(V + E), where V is the number of vertices and E is the number of edges. This is because, in both algorithms, each vertex and each edge is visited once in the worst case. The space complexity for both BFS and DFS is O(V), because each algorithm needs to keep track of visited vertices and uses an additional data structure—a queue for BFS and a stack for DFS—to manage the traversal order. BFS explores the graph by visiting all neighbors at the current level before moving to the next level, which requires storing all immediate neighbors in the queue. In contrast, DFS explores as far down a branch as possible before backtracking, which involves pushing nodes onto a stack as it goes deeper. In sparse graphs, where the number of edges is much lower compared to the number of vertices squared, both BFS and DFS perform very efficiently, scaling linearly with the size of the graph.
+
+
+      
+ 
