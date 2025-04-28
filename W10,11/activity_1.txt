@@ -1,0 +1,127 @@
+1.
+
+Initial State : The stack is empty, and S.top = 0.
+
+	1    2    3    4    5    6      
+
+      S
+
+PUSH(S,4) : After PUSH(S, 4), we push 4 onto the stack and S.top = 1.
+
+	1    2    3    4    5    6      
+
+      S 4
+
+PUSH(S,1) : After PUSH(S, 1), we push 1 onto the stack and S.top = 2.
+
+	1    2    3    4    5    6     
+
+      S 4    1
+
+PUSH(S,3) : After PUSH(S, 3), we push 3 onto the stack and S.top = 3.
+
+	1    2    3    4    5    6    
+
+      S 4    1    3
+
+POP(S)    : Stack S after the POP(S) has returned the elemenent 3 still
+            appears in the array, it is no longer in the stack; the top is element 1.
+
+	1    2    3    4    5    6    
+
+      S 4    1    3
+
+PUSH(S,8) : After PUSH(S, 8), we push 8 onto the stack and S.top = 3.
+
+	1    2    3    4    5    6     
+
+      S 4    1    8
+
+PUSH(S)   : After POP(S), we remove 8 from the stack. Even though 8 is still in the array,
+            it is no longer part of the stack; the top is element 1.
+
+	1    2    3    4    5    6     
+
+      S 4    1    8
+
+2.
+
+Initial State : The queue is empty and both head and tail at index 1.
+
+	1    2    3    4    5    6    
+
+      Q
+
+ENQUEUE(Q, 4) : The element 4 is added to the queue at Q.tail(index 1). Q.head = 1 and Q.tail = 2.
+
+	1    2    3    4    5    6     
+
+      Q 4 
+
+ENQUEUE(Q, 1) : The element 1 is added to the queue at Q.tail(index 2). Q.head = 1 and Q.tail = 3.
+
+	1    2    3    4    5    6     
+
+      Q 4    1    
+
+ENQUEUE(Q, 3) : The element 3 is added to the queue at Q.tail(index 3). Q.head = 1 and Q.tail = 4.
+
+	1    2    3    4    5    6     
+
+      Q 4    1    3
+
+DEQUEUE(Q)    : The element 4 is removed from the queue. Q.head = 2 and Q.tail = 4. 
+
+	1    2    3    4    5    6    
+
+      Q 4    1    3
+
+ENQUEUE(Q, 8) : The element 8 is added to the queue at Q.tail (index 4). Q.head = 2 and Q.tail = 5.
+
+	1    2    3    4    5    6    
+
+      Q 4    1    3    8
+
+DEQUEUE(Q)    : The element 1 is removed from the queue. Q.head = 3 and Q.tail = 5.
+
+	1    2    3    4    5    6     
+
+      Q 4    1    3    8
+
+3.
+
+To detect queue overflow and underflow:
+
+The ENQUEUE operation first checks if the queue is full before inserting an element; if full, it raises a queue overflow error. The DEQUEUE operation first checks if the queue is empty before removing an element; if empty, it raises a queue underflow error.
+
+4. 
+
+A deque (double-ended queue) allows insertion and deletion from both ends in O(1) time. The push_front operation inserts an element at the front by adjusting the Q.front index, while push_back inserts at the rear by updating Q.rear. Similarly, pop_front removes an element from the front and moves Q.front forward, while pop_back removes an element from the rear and moves Q.rear backward. If needed, the indices wrap around to maintain a circular structure. These operations ensure efficient and fast modifications at both ends of the deque.
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
